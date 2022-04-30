@@ -1,0 +1,308 @@
+[
+    {
+        "id": "1a1e2cf6a536ce11",
+        "type": "tab",
+        "label": "WaterManager",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0ea3fd4cea37d1df",
+        "type": "tab",
+        "label": "API",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c5ee7d10.742bd",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "autobud",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "3cb258f3337e1223",
+        "type": "comment",
+        "z": "1a1e2cf6a536ce11",
+        "name": "Collect Data",
+        "info": "",
+        "x": 110,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7e13e032783d5d06",
+        "type": "inject",
+        "z": "1a1e2cf6a536ce11",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "492261f700eecb11",
+        "type": "comment",
+        "z": "1a1e2cf6a536ce11",
+        "name": "Manual Water",
+        "info": "",
+        "x": 110,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "16273a78cc50b293",
+        "type": "rpi-gpio out",
+        "z": "1a1e2cf6a536ce11",
+        "name": "",
+        "pin": "4",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 270,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "9e75fe470558eef8",
+        "type": "inject",
+        "z": "1a1e2cf6a536ce11",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 110,
+        "y": 240,
+        "wires": [
+            [
+                "16273a78cc50b293"
+            ]
+        ]
+    },
+    {
+        "id": "68fa77545997e8e0",
+        "type": "inject",
+        "z": "1a1e2cf6a536ce11",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 110,
+        "y": 280,
+        "wires": [
+            [
+                "16273a78cc50b293"
+            ]
+        ]
+    },
+    {
+        "id": "37d3323c6c1dca35",
+        "type": "comment",
+        "z": "1a1e2cf6a536ce11",
+        "name": "Manual Soil Read",
+        "info": "",
+        "x": 120,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "0801176628cc0a2b",
+        "type": "inject",
+        "z": "1a1e2cf6a536ce11",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 400,
+        "wires": [
+            [
+                "e9804357367c5042"
+            ]
+        ]
+    },
+    {
+        "id": "e9804357367c5042",
+        "type": "exec",
+        "z": "1a1e2cf6a536ce11",
+        "command": "python3 /home/autobud/WaterManager/moisturepull.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 490,
+        "y": 400,
+        "wires": [
+            [
+                "757be02d69744dbc"
+            ],
+            [
+                "757be02d69744dbc"
+            ],
+            [
+                "757be02d69744dbc"
+            ]
+        ]
+    },
+    {
+        "id": "757be02d69744dbc",
+        "type": "debug",
+        "z": "1a1e2cf6a536ce11",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "a4671f75.c1c47",
+        "type": "http in",
+        "z": "0ea3fd4cea37d1df",
+        "name": "",
+        "url": "data",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "550aa44e.a0e73c",
+                "bb10e6f0103b9247"
+            ]
+        ]
+    },
+    {
+        "id": "550aa44e.a0e73c",
+        "type": "template",
+        "z": "0ea3fd4cea37d1df",
+        "name": "Format HTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "\n{{{payload}}}\n",
+        "x": 280,
+        "y": 180,
+        "wires": [
+            [
+                "c72d0c89.bb"
+            ]
+        ]
+    },
+    {
+        "id": "c72d0c89.bb",
+        "type": "http response",
+        "z": "0ea3fd4cea37d1df",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 450,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "83af9492.4f53f8",
+        "type": "function",
+        "z": "0ea3fd4cea37d1df",
+        "name": "Data Insert",
+        "func": "dataId = msg.payload.Id;\ndataMsg = msg.payload.msg;\ndataTemp = msg.payload.Temp;\ndataHum = msg.payload.Hum;\nmsg.topic = \n/*INSERT INTO Status (Id) VALUES (\" + dataId + \");\"*/\n\"INSERT INTO SensorData (Time, id, Moisture, Temp, Hum) VALUES (now(), \" + dataId + \", \" + dataMsg + \", \" + dataTemp + \", \" + dataHum + \");\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 630,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bb10e6f0103b9247",
+        "type": "debug",
+        "z": "0ea3fd4cea37d1df",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 120,
+        "wires": []
+    }
+]
